@@ -9,7 +9,7 @@ import xmlrpc.server
 from xmlrpc.server import SimpleXMLRPCServer
 from flask import Flask, render_template, jsonify, request, Response
 from modeles import GestionnairePieces
-from gestionnaire_capteurs import gestionnaire_capteurs
+from gestionnaire_capteur import gestionnaire_capteurs
 import logging
 import json
 
