@@ -8,7 +8,11 @@ if defined _OLD_CODEPAGE (
     "%SystemRoot%\System32\chcp.com" 65001 > nul
 )
 
+<<<<<<< HEAD
 set VIRTUAL_ENV=C:\Users\DELL\Desktop\Projet_Climatisation_Distribue\.venv
+=======
+set VIRTUAL_ENV=C:\Users\MomeNoobody\Desktop\Projet_Climatisation_Distribue\.venv
+>>>>>>> 06deb8cd25f8891274280e82e504098c99f2ae47
 
 if not defined PROMPT set PROMPT=$P$G
 
