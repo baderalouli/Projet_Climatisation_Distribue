@@ -167,22 +167,39 @@ def api_obtenir_pieces_capteurs():
 def api_ajouter_piece_capteurs():
     """
     API pour ajouter une nouvelle pièce avec ses capteurs
+    - Enregistre aussi la pièce côté gestionnaire principal
+    - Démarre automatiquement les capteurs pour que les valeurs s'affichent
     """
     data = request.json
     if 'nom_piece' not in data:
         return jsonify({'erreur': 'Nom de pièce manquant'}), 400
-    
+
     nom_piece = data['nom_piece'].strip()
     if not nom_piece:
         return jsonify({'erreur': 'Nom de pièce vide'}), 400
-    
+
     # Ajouter la pièce au gestionnaire de capteurs
     gestionnaire_capteurs.ajouter_piece(nom_piece)
-    
+
+    # S'assurer que la pièce existe dans le gestionnaire principal (pour /api/pieces et le stream)
+    try:
+        _ = gestionnaire_pieces.obtenir_piece(nom_piece)
+    except Exception as e:
+        logger.warning(f"Impossible d'initialiser la pièce {nom_piece} dans le gestionnaire principal: {e}")
+
+    # Démarrer automatiquement les capteurs pour que l'UI reçoive des valeurs
+    demarre = False
+    try:
+        gestionnaire_capteurs.demarrer_capteurs_piece(nom_piece)
+        demarre = True
+    except Exception as e:
+        logger.warning(f"Impossible de démarrer les capteurs pour {nom_piece}: {e}")
+
     return jsonify({
         'succes': True,
         'message': f'Pièce "{nom_piece}" ajoutée avec succès',
-        'piece_id': nom_piece
+        'piece_id': nom_piece,
+        'capteurs_demarres': demarre
     })
 
 @app.route('/api/capteurs/pieces/<piece_id>', methods=['DELETE'])
@@ -283,7 +300,7 @@ def stream():
             
             # Attendre un peu avant la prochaine vérification
             import time
-            time.sleep(1)
+            time.sleep(5)
     
     return Response(event_stream(), mimetype="text/event-stream")
 

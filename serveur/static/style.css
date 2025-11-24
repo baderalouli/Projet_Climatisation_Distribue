@@ -63,16 +63,18 @@ body.app {
 .create-panel { display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center; }
 
 /* Grid */
-.grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; }
-@media (max-width: 1200px){ .grid { grid-template-columns: repeat(3, 1fr);} }
-@media (max-width: 900px){ .grid { grid-template-columns: repeat(2, 1fr);} }
+/* Agrandissement des cartes: réduire le nombre de colonnes pour donner plus d'espace à chaque carte */
+.grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+@media (max-width: 1200px){ .grid { grid-template-columns: repeat(2, 1fr);} }
+@media (max-width: 900px){ .grid { grid-template-columns: 1fr 1fr;} }
 @media (max-width: 600px){ .grid { grid-template-columns: 1fr;} }
 
 /* Card */
-.card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; box-shadow: var(--shadow); padding: 16px; }
+/* Cartes plus grandes et plus aérées */
+.card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; box-shadow: var(--shadow); padding: 20px; }
 
 /* Room card */
-.room-card { position: relative; overflow: hidden; }
+.room-card { position: relative; overflow: hidden; min-height: 260px; }
 .room-card__header { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding-bottom: 10px; border-bottom: 1px dashed var(--border); }
 .room-card__title { display: flex; align-items: center; gap: 8px; }
 .room-name { font-size: 16px; font-weight: 700; }
@@ -84,14 +86,15 @@ body.app {
 .chip--off { background: rgba(148,163,184,.15); color: var(--muted); }
 .dot { width: 8px; height: 8px; border-radius: 999px; background: currentColor; opacity: .7; }
 
-.room-card__metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 12px 0; }
+/* Plus d'espace pour les métriques sur la carte */
+.room-card__metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; padding: 16px 0; }
 .metric { background: rgba(2,6,23,.35); border: 1px solid var(--border); border-radius: 12px; padding: 12px; display: grid; gap: 6px; justify-items: center; }
 .metric__icon { opacity: .9; }
-.metric__value { font-weight: 700; font-size: 20px; }
+.metric__value { font-weight: 700; font-size: 22px; }
 .metric__label { font-size: 12px; color: var(--muted); }
 
 .room-card__target { padding-top: 6px; }
-.target { display: grid; grid-template-columns: auto auto 1fr; align-items: center; gap: 12px; }
+.target { display: grid; grid-template-columns: auto auto 1fr; align-items: center; gap: 14px; }
 .target__label { color: var(--muted); font-size: 12px; }
 .target__value { font-weight: 700; }
 .target__ctrl { display: inline-flex; gap: 6px; }
@@ -99,8 +102,27 @@ body.app {
 .room-card__footer { display: flex; align-items: center; justify-content: space-between; padding-top: 10px; margin-top: 8px; border-top: 1px dashed var(--border); }
 .last-update { color: var(--muted); font-size: 12px; }
 
-.room-card__switches { position: absolute; right: 12px; top: 54px; display: grid; gap: 8px; }
-.switch-group { display: grid; grid-template-columns: auto auto; gap: 8px; align-items: center; background: rgba(2,6,23,.35); border: 1px solid var(--border); border-radius: 999px; padding: 6px 8px; }
+/* Les interrupteurs Auto/Clim sont désormais sous la ligne Cible, dans le flux normal */
+.room-card__switches { 
+  position: static; 
+  margin-top: 12px;
+  display: grid; 
+  grid-auto-flow: column; 
+  gap: 12px; 
+  justify-content: start;
+}
+.room-card__switches--inline .switch-group { padding: 8px 10px; }
+.switch-group { 
+  display: grid; 
+  grid-template-columns: auto auto; 
+  gap: 8px; 
+  align-items: center; 
+  background: rgba(2,6,23,.35); 
+  border: 1px solid var(--border); 
+  border-radius: 999px; 
+  padding: 6px 8px; 
+  box-shadow: var(--shadow);
+}
 .switch-label { font-size: 12px; color: var(--muted); }
 
 /* Switch */
