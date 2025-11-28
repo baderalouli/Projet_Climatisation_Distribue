@@ -135,20 +135,21 @@ input:checked + .slider:before { transform: translate(20px, -50%); }
 input:disabled + .slider { opacity: .6; }
 
 /* Detail drawer */
-.detail { position: fixed; inset: 0; background: rgba(2,6,23,.65); display: grid; place-items: center; padding: 24px; opacity: 1; transition: opacity .2s ease; }
+.detail { position: fixed; inset: 0; background: rgba(2,6,23,.65); display: grid; grid-template-rows: 1fr; align-items: center; justify-items: center; padding: clamp(8px, 2vw, 24px); opacity: 1; transition: opacity .2s ease; overflow: auto; z-index: 1000; }
 .detail.hidden { opacity: 0; pointer-events: none; }
-.detail__header { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-bottom: 12px; border-bottom: 1px dashed var(--border); }
+.detail__header { position: sticky; top: 0; z-index: 2; background: var(--card); display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 8px 0 12px; margin: 0 0 12px; border-bottom: 1px dashed var(--border); }
 .detail__title { font-weight: 700; font-size: 18px; }
-.detail__content { width: min(980px, 100%); max-height: min(85vh, 900px); overflow: auto; background: var(--card); border: 1px solid var(--border); border-radius: 16px; box-shadow: var(--shadow); }
-.detail__content { padding: 16px; }
+.detail__content { width: min(960px, 96vw); max-height: min(88vh, 900px); overflow: auto; background: var(--card); border: 1px solid var(--border); border-radius: 16px; box-shadow: var(--shadow); padding: 16px; }
 
 .hero { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 12px; }
+@media (max-width: 900px){ .hero { grid-template-columns: 1fr; } }
 .hero__metric { background: rgba(2,6,23,.35); border: 1px solid var(--border); border-radius: 12px; padding: 16px; display: grid; gap: 8px; }
 .hero__label { display: inline-flex; align-items: center; gap: 8px; color: var(--muted); font-size: 12px; }
 .hero__value { font-size: 34px; font-weight: 800; }
 .hero__time { color: var(--muted); font-size: 12px; }
 
 .detail__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+@media (max-width: 900px){ .detail__grid { grid-template-columns: 1fr; } }
 .detail .card { min-height: 140px; }
 .card__title { color: var(--muted); font-weight: 600; margin-bottom: 12px; }
 
